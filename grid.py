@@ -207,6 +207,6 @@ class Grid:
         for fungal in self.fungals:
             if not self.get_cell(fungal.x - 1, fungal.y): next_fungals.append((fungal.x - 1, fungal.y, "fungal"))
             if not self.get_cell(fungal.x + 1, fungal.y): next_fungals.append((fungal.x + 1, fungal.y, "fungal"))
-            if not self.get_cell(fungal.x, fungal.y  - 1): next_fungals.append((fungal.x, fungal.y - 1, "fungal"))
+            if not self.get_cell(fungal.x, fungal.y - 1): next_fungals.append((fungal.x, fungal.y - 1, "fungal"))
             if not self.get_cell(fungal.x, fungal.y + 1): next_fungals.append((fungal.x, fungal.y + 1, "fungal"))
         for fungal in next_fungals: self.add_cell(*fungal)
