@@ -50,7 +50,7 @@ class User:
         self.cell_size = 50
         self.currently_holding = 0
         self.cells = [
-            "regular", "mover", "duplicater", "rotater", "immovable", "slide", "destroyer"
+            "regular", "mover", "duplicater", "rotater", "immovable", "slide", "destroyer", "fungal"
         ]
         self.cell_sprites = [
             pg.image.load(f"assets/{image}.png") for image in self.cells

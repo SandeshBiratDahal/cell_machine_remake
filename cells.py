@@ -51,3 +51,7 @@ class Destroyer(Cell):
 class Slide(Cell):
     def __init__(self, x: int, y: int, direction: str):
         super().__init__(x, y, "slide", direction=direction)
+
+class Fungal(Cell):
+    def __init__(self, x: int, y: int, direction: str):
+        super().__init__(x, y, "fungal", direction=direction)

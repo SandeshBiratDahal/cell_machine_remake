@@ -12,6 +12,7 @@ class Grid:
         self.regulars = []
         self.slides = []
         self.destroyers = []
+        self.fungals = []
 
     def add_cell(self, x: int, y: int, type: str, direction: str = "u"):
         currently_placed = None
@@ -36,6 +37,9 @@ class Grid:
         elif type == "destroyer":
             currently_placed = Destroyer(x, y, direction)
             self.destroyers.append(currently_placed)
+        elif type == "fungal":
+            currently_placed = Fungal(x, y, direction)
+            self.fungals.append(currently_placed)
         Grid.placed_cells[(x, y)] = currently_placed
 
     def render(self, surf: pg.Surface):
@@ -46,6 +50,7 @@ class Grid:
         regular: Regular
         slide: Slide
         destroyer: Destroyer
+        fungal: Fungal
         for mover in self.movers: mover.render(surf)
         for rotater in self.rotaters: rotater.render(surf)
         for immovable in self.immovables: immovable.render(surf)
@@ -53,6 +58,7 @@ class Grid:
         for regular in self.regulars: regular.render(surf)
         for slide in self.slides: slide.render(surf)
         for destroyer in self.destroyers: destroyer.render(surf)
+        for fungal in self.fungals: fungal.render(surf)
 
     def get_cell(self, x: int, y: int) -> Cell: return Grid.placed_cells.get((x, y))
 
@@ -61,6 +67,7 @@ class Grid:
         rotater: Rotater
         duplicater: Duplicater
         destroyer: Destroyer
+        fungal: Fungal
 
         for destroyer in self.destroyers:
             match destroyer.direction:
@@ -195,3 +202,11 @@ class Grid:
             ]
             for neighbour in neighbours: 
                 if neighbour: neighbour.direction = rotater.direction
+        
+        next_fungals = []
+        for fungal in self.fungals:
+            if not self.get_cell(fungal.x - 1, fungal.y): next_fungals.append((fungal.x - 1, fungal.y, "fungal"))
+            if not self.get_cell(fungal.x + 1, fungal.y): next_fungals.append((fungal.x + 1, fungal.y, "fungal"))
+            if not self.get_cell(fungal.x, fungal.y  - 1): next_fungals.append((fungal.x, fungal.y - 1, "fungal"))
+            if not self.get_cell(fungal.x, fungal.y + 1): next_fungals.append((fungal.x, fungal.y + 1, "fungal"))
+        for fungal in next_fungals: self.add_cell(*fungal)
